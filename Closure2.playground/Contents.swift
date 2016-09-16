@@ -21,8 +21,39 @@ extension Array {
         }
         return result
     }
+    
+/*********** Flatmap ***********/
+    func flatMap<T>(transform: Element -> [T]) -> [T]{
+        var result = [T]()
+        for x in self{
+            result.appendContentsOf(transform(x))
+        }
+        return result
+    }
 }
 
 
 let integerValues = ["1", "2", "3", "4"].map({Int($0)})
+
+
+struct Account {
+    let username: String
+    let billingAddress: String?
+}
+
+
+let allUsers = [
+    Account(username: "pasanpr", billingAddress: nil),
+    Account(username: "benjakuben", billingAddress: "1234 Imaginary Street"),
+    Account(username: "instantNadel", billingAddress: "5678 Doesn't Live Here Dr."),
+    Account(username: "sketchings", billingAddress: nil),
+    Account(username: "paradoxed", billingAddress: "1122 Nope Lane")
+]
+
+
+let validAddress = allUsers.flatMap({$0.billingAddress})
+validAddress
+
+
+
 
