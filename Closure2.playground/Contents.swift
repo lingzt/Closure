@@ -55,5 +55,69 @@ let validAddress = allUsers.flatMap({$0.billingAddress})
 validAddress
 
 
+/*********** Filter ***********/
+
+let evenNumber = (0...20).filter({ $0 % 2 == 0})
+evenNumber
+
+
+//测试使用closure
+evenNumber.filter { (element: Int) -> Bool in
+    return element % 2 != 0
+}
+
+evenNumber
+
+//重写 filter
+extension Array {
+    func filter(includeElement: Element -> Bool) -> [Element] {
+        var result = [Element]()
+        for x in self where includeElement(x){
+            result.append(x)
+        }
+        return result
+    }
+}
+
+let pUser = allUsers.filter{ $0.username.characters.first == "p"}
+
+
+/*********** Reduce ***********/
+let scores = [10, 12, 11, 10, 12, 9]
+let totalScore = scores.reduce(0, combine: {total, score in total + score})
+totalScore
+
+extension Array {
+    func reduce<T>(initial: T, combine: (T, Element) -> T) -> T {
+        var result = initial
+        for x in self {
+            result = combine(result, x)
+        }
+        return result
+    }
+    
+//    func reduce<T>(initial: T, deduct: (T, Element) -> T) -> T {
+//        var result = initial
+//        for x in self {
+//            result = deduct(result, x)
+//        }
+//        return result
+//    }
+}
+//
+//
+//scores.reduce(64) { (remain: Int, score: Int) -> Int in
+//    return remain - score
+//}
+
+
+let dataSet = (1...100).filter { $0 % 3 == 0 && 0 % 7 == 0 }
+let identifer = dataSet.reduce("", combine: { str, num in str + "\(num)"})
+identifer
+
+
+
+
+
 
 
